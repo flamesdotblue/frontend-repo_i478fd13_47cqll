@@ -8,20 +8,30 @@ function App() {
   const canvasRef = useRef(null);
 
   const [color, setColor] = useState('#a78bfa');
-  const [size, setSize] = useState(8);
-  const [isEraser, setIsEraser] = useState(false);
+  const [size, setSize] = useState(10);
+  const [tool, setTool] = useState('brush'); // 'brush' | 'eraser' | 'rect' | 'circle'
+  const [glow, setGlow] = useState(true);
 
   const undo = () => canvasRef.current?.undo();
-  const clear = () => canvasRef.current?.clear();
+  const clearLayer = () => canvasRef.current?.clearLayer();
+  const clearAll = () => canvasRef.current?.clearAll();
   const copy = async () => {
-    const ok = await canvasRef.current?.copy();
+    const ok = await canvasRef.current?.copyMerged();
     if (ok) {
       notify('Copied to clipboard');
     } else {
       notify('Copy failed, use Download instead');
     }
   };
-  const download = () => canvasRef.current?.download();
+  const download = () => canvasRef.current?.downloadMerged();
+
+  const addLayer = () => canvasRef.current?.addLayer();
+  const deleteLayer = () => canvasRef.current?.deleteLayer();
+  const prevLayer = () => canvasRef.current?.prevLayer();
+  const nextLayer = () => canvasRef.current?.nextLayer();
+
+  const [layerInfo, setLayerInfo] = useState({ index: 1, total: 1 });
+  const onLayerChange = (info) => setLayerInfo(info);
 
   const [toast, setToast] = useState(null);
   const notify = (message) => {
@@ -34,23 +44,37 @@ function App() {
       <HeroCover />
 
       <main id="draw" className="relative container mx-auto px-6 -mt-12 md:-mt-20">
-        {/* Glass panel */}
         <div className="relative z-10 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-xl p-4 md:p-6 shadow-xl shadow-fuchsia-900/10">
           <Toolbar
             color={color}
             setColor={setColor}
             size={size}
             setSize={setSize}
-            isEraser={isEraser}
-            setIsEraser={setIsEraser}
+            tool={tool}
+            setTool={setTool}
+            glow={glow}
+            setGlow={setGlow}
             onUndo={undo}
-            onClear={clear}
+            onClear={clearLayer}
+            onClearAll={clearAll}
             onSave={copy}
             onDownload={download}
+            onAddLayer={addLayer}
+            onDeleteLayer={deleteLayer}
+            onPrevLayer={prevLayer}
+            onNextLayer={nextLayer}
+            layerInfo={layerInfo}
           />
 
           <div className="mt-4">
-            <DrawingCanvas ref={canvasRef} color={color} size={size} isEraser={isEraser} />
+            <DrawingCanvas
+              ref={canvasRef}
+              color={color}
+              size={size}
+              tool={tool}
+              glow={glow}
+              onLayerInfo={onLayerChange}
+            />
           </div>
         </div>
       </main>

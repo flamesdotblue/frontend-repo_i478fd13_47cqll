@@ -18,11 +18,11 @@ export default function HeroCover() {
         <div className="max-w-3xl text-white">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/20 mb-6">
             <Star className="w-4 h-4 text-yellow-300" />
-            <span className="text-sm tracking-wide">Trippy Galaxy Rollercoaster</span>
+            <span className="text-sm tracking-wide">Welcome to the Cosmic Canvas</span>
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-            Paint the Cosmos
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 via-sky-300 to-emerald-300">in a Futuristic Universe</span>
+            Hello Hema
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 via-sky-300 to-emerald-300">let\'s paint the cosmos</span>
           </h1>
           <p className="mt-4 md:mt-6 text-base md:text-lg text-white/80">
             Glide through a holographic nebula and sketch your ideas on a starlit canvas. A playful, immersive drawing studio set in a cosmic playground.
